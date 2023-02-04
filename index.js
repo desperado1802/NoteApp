@@ -7,6 +7,20 @@ getNotes().forEach((note) => {
   appEl.insertBefore(noteEl, btnEl);
 });
 
+window.addEventListener("load", () => {
+  document.querySelectorAll(".note").forEach((individualNote) => {
+    scrollDetect(individualNote);
+  });
+});
+
+function scrollDetect(element) {
+  if (element.offsetHeight < element.scrollHeight) {
+    element.style.borderRadius = "15px 0 0 15px";
+  } else {
+    element.style.borderRadius = "15px";
+  }
+}
+
 function createNote(id, content) {
   const element = document.createElement("textarea");
   element.classList.add("note");
@@ -21,6 +35,7 @@ function createNote(id, content) {
   });
 
   element.addEventListener("input", () => {
+    scrollDetect(element);
     updateNote(id, element.value);
   });
   return element;
